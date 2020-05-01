@@ -42,6 +42,19 @@ class Form : View() {
         })
     }
 
+    fun onRemove() {
+        if (createdTimeConsumptionViews.isNotEmpty()) {
+            removeLast(createdTimeConsumptionViews)
+            removeLast(timeConsumptionsContainer.children)
+        }
+    }
+
+    private fun removeLast(list: MutableList<*>) = list.removeAt(list.size - 1)
+
+    fun onClearChart() {
+        lineChart.data.clear()
+    }
+
     fun onCalculate() {
         val amplitude = amplitudeField.text.toDouble()
         val frequency = Math.PI / frequencyField.text.toDouble()
@@ -65,7 +78,7 @@ class Form : View() {
             ))
         }
 
-        lineChart.series("name", createChartDataList(x, y).toObservable())
+        lineChart.series("Consumptions ${lineChart.data.size}", createChartDataList(x, y).toObservable())
     }
 
     private fun createChartDataList(x: List<Double>, y: List<Double>): List<XYChart.Data<Double, Double>> {
